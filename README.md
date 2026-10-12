@@ -151,3 +151,7 @@ This guide is normally requested in the style of a Ladybird book, and for good r
 The rest of this guide is deliberately not written that way, and here is why. Ladybird prose works by simplification and serene certainty: one fact, stated plainly, with Janet and Peter to reassure. But a setup runbook needs the opposite machinery - conditional warnings ("disable Secure Boot *if* the machine refuses to boot"), precise option strings where a single missing word means silent failure, and honest caveats about data loss. Ladybird-style writing cannot carry a caveat without either losing the charm or burying the warning. A sentence like "RAIDZ1 is not backup" only sounds reassuring in Ladybird cadence, and reassurance is precisely the wrong tone for a step that, done wrong, costs you your data. Whimsy also destroys scannability: you skim a runbook looking for the exact command, and Peter's opinion of biscuits is in the way.
 
 So the body of this document keeps Ladybird's virtues - plain sentences, one step at a time, nothing hidden - and drops its vices. Janet and Peter live here in the appendix, where they can do no harm.
+
+## Credits
+
+Written by [itsfja](https://github.com/itsfja) with [Vibe Code](https://mistral.ai) - an async software-engineering agent powered by the `zai-glm-5-3` model.
