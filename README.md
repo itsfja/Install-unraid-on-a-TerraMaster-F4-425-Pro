@@ -1,4 +1,4 @@
-# Install Unraid on a TerraMaster F4-425 Pro
+# Instaling Unraid on a TerraMaster F4-425 Pro
 
 A complete walkthrough for installing Unraid on the TerraMaster F4-425 Pro, installing three 6TB drives, creating a ZFS pool, and sharing it with two Proxmox NUCs over NFS.
 
