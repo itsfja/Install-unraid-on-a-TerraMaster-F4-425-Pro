@@ -135,3 +135,19 @@ zpool iostat 1
 - **Snapshots:** set up periodic ZFS snapshots on the `proxmox` dataset (for example hourly, keeping 24) for instant rollback of a broken VM.
 - **TOS fallback:** the internal 256GB TOS NAND stays untouched, so you can boot back into TOS at any time by changing the BIOS boot order.
 - **Backup:** RAIDZ1 is not backup. Consider Proxmox Backup Server (runnable as a container on the Unraid box itself, or on a third machine) or an offsite sync for anything irreplaceable.
+
+## Appendix: On the Ladybird Style
+
+This guide is normally requested in the style of a Ladybird book, and for good reason - Ladybird's mid-century children's primers remain one of the most perfect pieces of technical writing England has produced: short declarative sentences, one idea per page, absolute confidence, and a charming illustration of Janet looking at something. For the delight of anyone who knows what a Ladybird book sounds like, the whole of this guide rendered in that style would begin something like this:
+
+> Here is the NAS. The NAS is a TerraMaster. It has four bays. Janet puts three disks in the bays. "The disks are six terabytes each," says Janet. Peter nods. Peter likes ZFS. "ZFS checks the sums of the data," says Peter. "If a disk is naughty, ZFS will know."
+>
+> Peter makes a pool. The pool is called tank. Tank is a RAIDZ. Janet does not know what the Z means. "It is best not to ask," says Peter. They have a biscuit.
+>
+> Now the two little NUCs must share the tank. NFS is how they share. Janet types `no_root_squash`. "This is very important," says Peter. Janet did not type it the first time. Janet's virtual machines could not write. Janet was sad. Now the machines can write, and Janet is happy.
+>
+> At night, when the house is dark, the NAS scrubs the pool. It checks every block. The NAS does not sleep. The NAS is a good NAS.
+
+The rest of this guide is deliberately not written that way, and here is why. Ladybird prose works by simplification and serene certainty: one fact, stated plainly, with Janet and Peter to reassure. But a setup runbook needs the opposite machinery - conditional warnings ("disable Secure Boot *if* the machine refuses to boot"), precise option strings where a single missing word means silent failure, and honest caveats about data loss. Ladybird-style writing cannot carry a caveat without either losing the charm or burying the warning. A sentence like "RAIDZ1 is not backup" only sounds reassuring in Ladybird cadence, and reassurance is precisely the wrong tone for a step that, done wrong, costs you your data. Whimsy also destroys scannability: you skim a runbook looking for the exact command, and Peter's opinion of biscuits is in the way.
+
+So the body of this document keeps Ladybird's virtues - plain sentences, one step at a time, nothing hidden - and drops its vices. Janet and Peter live here in the appendix, where they can do no harm.
