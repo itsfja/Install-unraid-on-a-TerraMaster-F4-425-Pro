@@ -63,7 +63,13 @@ Alternatives:
 - A 3-way mirror gives only 6TB usable but tolerates two drive failures and is much faster
 - Three striped drives give 18TB with zero redundancy - not recommended for VM storage
 
-### Step 3 - Start the pool and create datasets
+### Step 3 - Assign one disk to the array (required - the Start button gotcha)
+
+Unraid will not start with zero devices assigned to the array. Even if all your storage lives in pools, the **START** button stays greyed out until at least one disk is assigned to the array (as Disk 1, no parity needed). This is the most common first surprise in pools-only builds.
+
+In this build, a spare 3TB drive was assigned as array **Disk 1** (XFS). Any disk works - a small SSD is ideal, since the array slot is a good long-term home for appdata, Docker, and VM configs, keeping the pool clean for Proxmox data. With no parity disk assigned, the array comes up instantly.
+
+### Step 4 - Start the pool and create datasets
 
 Start the pool, then create separate datasets rather than dumping files in the pool root. Suggested datasets:
 
@@ -74,15 +80,15 @@ Start the pool, then create separate datasets rather than dumping files in the p
 
 Per-dataset settings let you tune recordsize later (for example 16K for databases, 1M for media).
 
-### Step 4 - Create shares
+### Step 5 - Create shares
 
 For each dataset, create a share from the pool's share view. SMB serves your desktop machines; NFS serves the NUCs (Part 4).
 
-### Step 5 - Keep compression on
+### Step 6 - Keep compression on
 
 LZ4 compression is on by default - keep it. It is nearly free and speeds up network-bound transfers.
 
-### Step 6 - Schedule scrubs
+### Step 7 - Schedule scrubs
 
 Under **Settings > Scheduler**, enable a monthly ZFS scrub. Scrubbing is what actually validates and repairs checksums across the pool.
 
@@ -131,6 +137,7 @@ zpool iostat 1
 ## Tips and Gotchas
 
 - **ZFS recordsize for VMs:** the `proxmox` dataset defaults to 128K records, which is fine for qcow2 over NFS, but setting `recordsize=16K` on that dataset lowers latency for random writes. Do this before placing VMs on it, since the setting only applies to new writes.
+- **The array needs at least one device to start.** With an empty array and only pools configured, the START button on the Main tab stays greyed out. Assign any single disk as array Disk 1 (no parity) to enable it. If you have no spare disk, the fallback is one 6TB in the array (XFS) plus the other two as a ZFS mirror pool (~6TB usable instead of ~11.4TB).
 - **Do not use the traditional array plus parity for this workload.** A dedicated ZFS pool is the supported, snapshot-capable, well-performing option, and the Unraid array cannot safely share VM disks via NFS to multiple simultaneous hosts.
 - **Snapshots:** set up periodic ZFS snapshots on the `proxmox` dataset (for example hourly, keeping 24) for instant rollback of a broken VM.
 - **TOS fallback:** the internal 256GB TOS NAND stays untouched, so you can boot back into TOS at any time by changing the BIOS boot order.
